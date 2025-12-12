@@ -5,10 +5,12 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        i = 0
+        seen = {}
+ 
         for i in range(len(nums)):
-            j=i+1
-            for j in range(i+1,len(nums)):
-                if (nums[i]+nums[j]) == target:
-                    return [i,j]
-        
+            need = target - nums[i]
+            if need in seen:
+                return [seen[need],i]
+            seen[nums[i]] = i
+
+
