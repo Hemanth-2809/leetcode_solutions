@@ -5,21 +5,27 @@ class Solution(object):
         :rtype: int
         """
         n = len(nums)
-        if n <=3:
+        if n <= 3:
             return max(nums)
-        nums_fir = nums[:n-1]
-        nums_las = nums[1:n]
+        dp1= [-1]*(n-1)
+        dp2= [-1]*(n-1)
+        num1 = nums[:n-1]
+        num2 = nums[1:n]
+        dp1[0] = num1[0]
+        dp2[0] = num2[0]
+   
 
-        dp_fir = [-1]*(n-1)
-        dp_las = [-1]*(n-1)
-        def f(n,nums,dp):
-            if n==0:
-                return nums[0]
-            if n==1:
-                return max(nums[0],nums[1])
-            if dp[n]!=-1:
-                return dp[n]
-            dp[n] = max(f(n-1,nums,dp),(nums[n]+f(n-2,nums,dp)))
-            return dp[n]
-        return max(f(n-2,nums_fir,dp_fir),f(n-2,nums_las,dp_las))
+        def f(i,dp,arr):
+            if i < 0:
+                return 0
+            if i == 0:
+                return arr[0]
+            if dp[i] != -1:
+                return dp[i]
+            dp [i] = max((arr[i]+f(i-2,dp,arr)),f(i-1,dp,arr))
+            return dp[i]
+        
+    
+        return max(f(n-2,dp1,num1),f(n-2,dp2,num2))
+
         
